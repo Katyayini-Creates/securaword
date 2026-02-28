@@ -44,9 +44,37 @@
 #         "feedback": feedback
 #     }
 
+# import re
+# from src.core.feedback import generate_feedback
+# from src.core.entropy import calculate_entropy
+
+# def analyze_password(password: str) -> dict:
+
+#     results = {
+#         "length": len(password) >= 8,
+#         "uppercase": bool(re.search(r"[A-Z]", password)),
+#         "lowercase": bool(re.search(r"[a-z]", password)),
+#         "digit": bool(re.search(r"[0-9]", password)),
+#         "special": bool(re.search(r"[!@#$%^&*()_+=\-]", password)),
+#     }
+
+#     score = sum(results.values())
+
+#     entropy = calculate_entropy(password)
+
+#     feedback = generate_feedback(results)
+
+#     return {
+#         "score": score,
+#         "entropy": entropy,
+#         "details": results,
+#         "feedback": feedback
+#     }
+
 import re
 from src.core.feedback import generate_feedback
 from src.core.entropy import calculate_entropy
+from src.core.attacks import is_common_password
 
 def analyze_password(password: str) -> dict:
 
@@ -59,14 +87,21 @@ def analyze_password(password: str) -> dict:
     }
 
     score = sum(results.values())
-
     entropy = calculate_entropy(password)
-
     feedback = generate_feedback(results)
+
+    common = is_common_password(password)
+
+    if common:
+        score = 0
+        feedback.append(
+            "This password is extremely common and vulnerable to dictionary attacks."
+        )
 
     return {
         "score": score,
         "entropy": entropy,
+        "is_common": common,
         "details": results,
         "feedback": feedback
     }
