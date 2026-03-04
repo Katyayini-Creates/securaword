@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SecuraWord Password Analyzer</title>
+</head>
+<body>
+
+<h1>🔐 SecuraWord Password Strength Analyzer</h1>
+
+<input type="password" id="passwordInput" placeholder="Enter password">
+<button onclick="analyzePassword()">Analyze</button>
+
+<h2>Result</h2>
+<p id="strength"></p>
+<p id="entropy"></p>
+<ul id="feedback"></ul>
+
+<script>
+async function analyzePassword() {
+
+    const password = document.getElementById("passwordInput").value;
+
+    const response = await fetch("http://127.0.0.1:8000/analyze", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            password: password
+        })
+    });
+
+    const data = await response.json();
+
+    document.getElementById("strength").innerText = "Score: " + data.score;
+    document.getElementById("entropy").innerText = "Entropy: " + data.entropy;
+
+    const feedbackList = document.getElementById("feedback");
+    feedbackList.innerHTML = "";
+
+    data.feedback.forEach(item => {
+        const li = document.createElement("li");
+        li.innerText = item;
+        feedbackList.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
