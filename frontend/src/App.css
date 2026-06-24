@@ -216,3 +216,53 @@ body{
   }
 }
 
+.report-container{
+  margin-top:30px;
+
+  border:2px solid #39FF14;
+
+  padding:20px;
+
+  background:rgba(57,255,20,0.05);
+
+  box-shadow:0 0 10px #39FF14;
+}
+
+.report-title{
+  color:#39FF14;
+
+  font-size:2rem;
+
+  margin-bottom:15px;
+
+  text-align:center;
+}
+
+.report-item{
+  color:#FF2D95;
+
+  margin-bottom:10px;
+
+  font-size:1.3rem;
+}
+
+.report-success{
+  color:#39FF14;
+
+  text-align:center;
+
+  font-size:1.5rem;
+}
+
+.active-weak{
+  text-shadow:0 0 15px #FF3131;
+}
+
+.active-medium{
+  text-shadow:0 0 15px #FFB000;
+}
+
+.active-strong{
+  text-shadow:0 0 15px #39FF14;
+}
+
