@@ -29,69 +29,78 @@ body{
 
 .title{
   font-size:5rem;
+
   text-align:center;
+
   color:#00F5FF;
 
   text-shadow:
     0 0 10px #00F5FF,
     0 0 20px #00F5FF;
+
+  margin-bottom:10px;
 }
 
 .subtitle{
   text-align:center;
-  margin-bottom:30px;
+
   color:#FF2D95;
-  letter-spacing:2px;
-}
 
-.input-container{
-  position:relative;
-  width:100%;
-}
+  letter-spacing:3px;
 
-.password-input{
-  width:100%;
-  padding:15px;
-  padding-right:60px;
+  font-size:1.7rem;
 
-  font-size:1.5rem;
-
-  background:#111;
-  color:white;
-
-  border:2px solid #00F5FF;
-  outline:none;
-
-  letter-spacing:2px;
-
-  box-sizing:border-box;
+  margin-bottom:35px;
 }
 
 .password-input:focus{
   box-shadow:0 0 15px #00F5FF;
 }
 
-.eye-button{
-  position:absolute;
-
-  right:15px;
-  top:50%;
-
-  transform:translateY(-50%);
-
-  background:none;
-  border:none;
-
-  cursor:pointer;
-
-  font-size:1.6rem;
-
-  color:#FF2D95;
-
-  text-shadow:0 0 10px #FF2D95;
-
-  padding:0;
+.input-container{
+  position: relative;
+  width: 100%;
 }
+
+.password-input{
+  width: 100%;
+  padding: 15px 60px 15px 15px; /* space on right for eye */
+
+  font-size: 1.5rem;
+
+  background: #111;
+  color: white;
+
+  border: 2px solid #00F5FF;
+  outline: none;
+
+  letter-spacing: 2px;
+
+  box-sizing: border-box;
+}
+
+.eye-button{
+  position: absolute;
+
+  right: 18px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+
+  color: #FF2D95;
+  font-size: 1.8rem;
+
+  padding: 0;
+  margin: 0;
+
+  z-index: 10;
+}
+
 
 .meter-container{
   width:100%;

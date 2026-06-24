@@ -48,78 +48,97 @@ function App() {
           : "#39FF14"
 
   return (
-    <div className="app">
-      <div className="panel">
-        <h1 className="title">🔐 SECURAWORD</h1>
+  <div className="app">
+    <div className="panel">
 
-        <p className="subtitle">
-          PASSWORD ANALYSIS TERMINAL
-        </p>
+      <h1 className="title">SECURAWORD</h1>
 
-        <div className="input-container">
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="ENTER PASSWORD..."
-            value={password}
-            onChange={(e) => analyzePassword(e.target.value)}
-            className="password-input"
-          />
+      <p className="subtitle">
+        PASSWORD STRENGTH ANALYZER
+      </p>
 
-          <button
-            type="button"
-            className="eye-button"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? <FiEyeOff /> : <FiEye />}
-          </button>
-        </div>
+      <div className="input-container">
+        <input
+          type={showPassword ? "text" : "password"}
+          placeholder="ENTER PASSWORD..."
+          value={password}
+          onChange={(e) => analyzePassword(e.target.value)}
+          className="password-input"
+        />
 
-        <div className="meter-labels">
-          <span>WEAK</span>
-          <span>MEDIUM</span>
-          <span>STRONG</span>
-        </div>
-
-        <div className="meter-container">
-          <div
-            className="meter-fill"
-            style={{
-              width: `${meterWidth}%`,
-              background: meterColor,
-              boxShadow: `0 0 10px ${meterColor}, 0 0 20px ${meterColor}`,
-            }}
-          ></div>
-        </div>
-      
-        {score !== null && (
-          <div className="strength-label">
-            SECURITY LEVEL:{" "}
-            {score <= 1
-              ? "WEAK"
-              : score <= 3
-                ? "MEDIUM"
-                : "STRONG"}
-          </div>
-        )}
-
-        {entropy !== null && (
-          <div className="entropy-display">
-            ENTROPY: {entropy.toFixed(2)} BITS
-          </div>
-        )}
-
-        {feedback.length > 0 && (
-          <div className="feedback-container">
-            {feedback.map((item, index) => (
-              <div key={index} className="feedback-card">
-                ⚠ {item}
-              </div>
-            ))}
-          </div>
-        )}
+        <button
+          type="button"
+          className="eye-button"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? <FiEyeOff /> : <FiEye />}
+        </button>
       </div>
+
+      <div className="meter-labels">
+        <span>WEAK</span>
+        <span>MEDIUM</span>
+        <span>STRONG</span>
+      </div>
+
+      <div className="meter-container">
+        <div
+          className="meter-fill"
+          style={{
+            width: `${meterWidth}%`,
+            background: meterColor,
+            boxShadow: `0 0 10px ${meterColor}, 0 0 20px ${meterColor}`,
+          }}
+        ></div>
+      </div>
+
+      {score !== null && (
+        <div
+          className="strength-label"
+          style={{
+            color:
+              score <= 1
+                ? "#FF3131"
+                : score <= 3
+                ? "#FFB000"
+                : "#39FF14",
+
+            textShadow:
+              score <= 1
+                ? "0 0 10px #FF3131"
+                : score <= 3
+                ? "0 0 10px #FFB000"
+                : "0 0 10px #39FF14",
+          }}
+        >
+          SECURITY LEVEL:{" "}
+          {score <= 1
+            ? "WEAK"
+            : score <= 3
+            ? "MEDIUM"
+            : "STRONG"}
+        </div>
+      )}
+
+      {entropy !== null && (
+        <div className="entropy-display">
+          ENTROPY: {entropy.toFixed(2)} BITS
+        </div>
+      )}
+
+      {feedback.length > 0 && (
+        <div className="feedback-container">
+          {feedback.map((item, index) => (
+            <div key={index} className="feedback-card">
+              ⚠ {item}
+            </div>
+          ))}
+        </div>
+      )}
+
     </div>
-  )
+  </div>
+)
 }
 
 export default App
