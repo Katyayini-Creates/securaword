@@ -81,3 +81,38 @@ body{
       0 0 10px #39FF14,
       0 0 20px #39FF14;
 }
+
+.strength-label{
+    margin-top:20px;
+    text-align:center;
+    font-size:2rem;
+    color:#39FF14;
+    text-shadow:0 0 10px #39FF14;
+}
+
+.entropy-display{
+    margin-top:15px;
+    text-align:center;
+    font-size:1.7rem;
+    color:#FFB000;
+}
+
+.feedback-container{
+    margin-top:25px;
+}
+
+.feedback-card{
+    margin-bottom:12px;
+    padding:12px;
+
+    border:2px solid #FF2D95;
+
+    color:#FF2D95;
+
+    background:rgba(255,45,149,0.08);
+
+    box-shadow:
+      0 0 8px #FF2D95;
+
+    font-size:1.3rem;
+}

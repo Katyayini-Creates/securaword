@@ -38,6 +38,13 @@ function App() {
 
   const meterWidth = score ? (score / 5) * 100 : 0
 
+const meterColor =
+  score <= 1
+    ? "#FF3131"
+    : score <= 3
+    ? "#FFB000"
+    : "#39FF14"
+
   return (
     <div className="app">
 
@@ -63,10 +70,40 @@ function App() {
           <div
             className="meter-fill"
             style={{
-              width: `${meterWidth}%`
-            }}
+  width: `${meterWidth}%`,
+  background: meterColor,
+  boxShadow: `0 0 10px ${meterColor}, 0 0 20px ${meterColor}`
+}}
           ></div>
         </div>
+
+        {score !== null && (
+  <div className="strength-label">
+
+    {entropy && (
+  <div className="entropy-display">
+    ENTROPY: {entropy.toFixed(2)} BITS
+  </div>
+)}
+
+{feedback.length > 0 && (
+  <div className="feedback-container">
+    {feedback.map((item, index) => (
+      <div key={index} className="feedback-card">
+        ⚠ {item}
+      </div>
+    ))}
+  </div>
+)}
+    SECURITY LEVEL: {
+      score <= 1
+        ? "WEAK"
+        : score <= 3
+        ? "MEDIUM"
+        : "STRONG"
+    }
+  </div>
+)}
 
       </div>
 
