@@ -219,23 +219,29 @@ body{
 .report-container{
   margin-top:30px;
 
-  border:2px solid #39FF14;
+  border:2px solid #00F5FF;
 
   padding:20px;
 
-  background:rgba(57,255,20,0.05);
+  background:rgba(0,245,255,0.05);
 
-  box-shadow:0 0 10px #39FF14;
+  box-shadow:
+    0 0 10px #00F5FF,
+    0 0 20px #00F5FF;
 }
 
 .report-title{
-  color:#39FF14;
+  color:#00F5FF;
 
   font-size:2rem;
 
-  margin-bottom:15px;
+  margin-bottom:20px;
 
   text-align:center;
+
+  text-shadow:
+    0 0 10px #00F5FF,
+    0 0 20px #00F5FF;
 }
 
 .report-item{
@@ -264,5 +270,51 @@ body{
 
 .active-strong{
   text-shadow:0 0 15px #39FF14;
+}
+
+.generate-btn{
+  margin-top:30px;
+  width:100%;
+
+  padding:15px;
+
+  background:#FF2D95;
+
+  color:white;
+
+  border:none;
+
+  cursor:pointer;
+
+  font-size:1.6rem;
+
+  font-family:'VT323', monospace;
+
+  letter-spacing:2px;
+
+  box-shadow:
+    0 0 10px #FF2D95,
+    0 0 20px #FF2D95;
+
+  transition:0.3s;
+}
+
+.generate-btn:hover{
+  transform:scale(1.02);
+}
+
+.generated-password{
+  margin-top:20px;
+
+  text-align:center;
+
+  font-size:2rem;
+
+  color:#00F5FF;
+
+  text-shadow:
+    0 0 10px #00F5FF;
+
+  word-break:break-all;
 }
 

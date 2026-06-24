@@ -8,6 +8,7 @@ function App() {
   const [score, setScore] = useState(null)
   const [feedback, setFeedback] = useState([])
   const [showPassword, setShowPassword] = useState(false)
+  const [generatedPassword, setGeneratedPassword] = useState("")
 
   async function analyzePassword(value) {
     setPassword(value)
@@ -36,6 +37,41 @@ function App() {
     setFeedback(data.feedback)
   }
 
+  function generatePassword() {
+    const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    const lowercase = "abcdefghijklmnopqrstuvwxyz"
+    const numbers = "0123456789"
+    const symbols = "!@#$%^&*()_+"
+
+    const allChars =
+      uppercase +
+      lowercase +
+      numbers +
+      symbols
+
+    let newPassword = ""
+
+    newPassword += uppercase[Math.floor(Math.random() * uppercase.length)]
+    newPassword += lowercase[Math.floor(Math.random() * lowercase.length)]
+    newPassword += numbers[Math.floor(Math.random() * numbers.length)]
+    newPassword += symbols[Math.floor(Math.random() * symbols.length)]
+
+    for (let i = 0; i < 8; i++) {
+      newPassword +=
+        allChars[Math.floor(Math.random() * allChars.length)]
+    }
+
+    newPassword = newPassword
+      .split("")
+      .sort(() => Math.random() - 0.5)
+      .join("")
+
+    setGeneratedPassword(newPassword)
+    setPassword(newPassword)
+
+    analyzePassword(newPassword)
+  }
+
   const meterWidth = score ? (score / 5) * 100 : 0
 
   const meterColor =
@@ -51,13 +87,16 @@ function App() {
     <div className="app">
       <div className="panel">
 
-        <h1 className="title">SECURAWORD</h1>
+        <h1 className="title">
+          SECURAWORD
+        </h1>
 
         <p className="subtitle">
           PASSWORD STRENGTH ANALYZER
         </p>
 
         <div className="input-container">
+
           <input
             type={showPassword ? "text" : "password"}
             placeholder="ENTER PASSWORD..."
@@ -73,9 +112,11 @@ function App() {
           >
             {showPassword ? <FiEyeOff /> : <FiEye />}
           </button>
+
         </div>
 
         <div className="meter-labels">
+
           <span className={score <= 1 ? "active-weak" : ""}>
             WEAK
           </span>
@@ -93,6 +134,7 @@ function App() {
           <span className={score > 3 ? "active-strong" : ""}>
             STRONG
           </span>
+
         </div>
 
         <div className="meter-container">
@@ -149,7 +191,10 @@ function App() {
 
             {feedback.length > 0 ? (
               feedback.map((item, index) => (
-                <div key={index} className="report-item">
+                <div
+                  key={index}
+                  className="report-item"
+                >
                   ⚠ {item}
                 </div>
               ))
@@ -159,6 +204,19 @@ function App() {
               </div>
             )}
 
+          </div>
+        )}
+
+        <button
+          className="generate-btn"
+          onClick={generatePassword}
+        >
+          GENERATE SECURE PASSWORD
+        </button>
+
+        {generatedPassword && (
+          <div className="generated-password">
+            {generatedPassword}
           </div>
         )}
 
