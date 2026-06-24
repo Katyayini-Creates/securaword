@@ -1,3 +1,4 @@
+import "./App.css"
 import { useState } from "react"
 
 function App() {
@@ -7,24 +8,24 @@ function App() {
   const [score, setScore] = useState(null)
   const [feedback, setFeedback] = useState([])
 
-  async function analyzePassword(value){
+  async function analyzePassword(value) {
 
     setPassword(value)
 
-    if(value.length === 0){
+    if (value.length === 0) {
       setEntropy(null)
       setScore(null)
       setFeedback([])
       return
     }
 
-    const response = await fetch("http://127.0.0.1:8000/analyze",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
+    const response = await fetch("http://127.0.0.1:8000/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        password:value
+        password: value
       })
     })
 
@@ -35,52 +36,43 @@ function App() {
     setFeedback(data.feedback)
   }
 
-  const meterWidth = score ? (score/5)*100 : 0
+  const meterWidth = score ? (score / 5) * 100 : 0
 
   return (
+    <div className="app">
 
-    <div style={{textAlign:"center",marginTop:"100px"}}>
+      <div className="panel">
 
-      <h1>🔐 SecuraWord Password Analyzer</h1>
+        <h1 className="title">
+          🔐 SECURAWORD
+        </h1>
 
-      <input
-        type="password"
-        placeholder="Enter password"
-        value={password}
-        onChange={(e)=> analyzePassword(e.target.value)}
-        style={{padding:"10px",width:"300px"}}
-      />
+        <p className="subtitle">
+          PASSWORD ANALYSIS TERMINAL
+        </p>
 
-      <div style={{
-        width:"300px",
-        height:"15px",
-        background:"#ddd",
-        margin:"20px auto",
-        borderRadius:"5px"
-      }}>
+        <input
+          type="password"
+          placeholder="ENTER PASSWORD..."
+          value={password}
+          onChange={(e) => analyzePassword(e.target.value)}
+          className="password-input"
+        />
 
-        <div style={{
-          width:`${meterWidth}%`,
-          height:"100%",
-         background:
-         score <= 1 ? "red" :
-         score <= 3 ? "orange" :
-        "limegreen"
-        }}></div>
+        <div className="meter-container">
+          <div
+            className="meter-fill"
+            style={{
+              width: `${meterWidth}%`
+            }}
+          ></div>
+        </div>
 
       </div>
 
-      {entropy && <p>Entropy: {entropy} bits</p>}
-
-      <ul style={{width:"300px",margin:"auto",textAlign:"left"}}>
-        {feedback.map((item,index)=>(
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-
     </div>
-
   )
 }
 
 export default App
+
