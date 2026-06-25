@@ -1,4 +1,4 @@
-import { FiEye, FiEyeOff } from "react-icons/fi"
+import { FiEye, FiEyeOff, FiCopy } from "react-icons/fi"
 import "./App.css"
 import { useState } from "react"
 
@@ -9,6 +9,7 @@ function App() {
   const [feedback, setFeedback] = useState([])
   const [showPassword, setShowPassword] = useState(false)
   const [generatedPassword, setGeneratedPassword] = useState("")
+  const [copied, setCopied] = useState(false)
 
   async function analyzePassword(value) {
     setPassword(value)
@@ -72,16 +73,32 @@ function App() {
     analyzePassword(newPassword)
   }
 
+  async function copyPassword() {
+    if (!generatedPassword) return
+
+    try {
+      await navigator.clipboard.writeText(generatedPassword)
+
+      setCopied(true)
+
+      setTimeout(() => {
+        setCopied(false)
+      }, 2000)
+    } catch (error) {
+      console.error("Failed to copy password:", error)
+    }
+  }
+
   const meterWidth = score ? (score / 5) * 100 : 0
 
   const meterColor =
     score === null
       ? "#00F5FF"
       : score <= 1
-      ? "#FF3131"
-      : score <= 3
-      ? "#FFB000"
-      : "#39FF14"
+        ? "#FF3131"
+        : score <= 3
+          ? "#FFB000"
+          : "#39FF14"
 
   return (
     <div className="app">
@@ -156,23 +173,23 @@ function App() {
                 score <= 1
                   ? "#FF3131"
                   : score <= 3
-                  ? "#FFB000"
-                  : "#39FF14",
+                    ? "#FFB000"
+                    : "#39FF14",
 
               textShadow:
                 score <= 1
                   ? "0 0 10px #FF3131"
                   : score <= 3
-                  ? "0 0 10px #FFB000"
-                  : "0 0 10px #39FF14",
+                    ? "0 0 10px #FFB000"
+                    : "0 0 10px #39FF14",
             }}
           >
             SECURITY LEVEL:{" "}
             {score <= 1
               ? "WEAK"
               : score <= 3
-              ? "MEDIUM"
-              : "STRONG"}
+                ? "MEDIUM"
+                : "STRONG"}
           </div>
         )}
 
@@ -215,10 +232,30 @@ function App() {
         </button>
 
         {generatedPassword && (
-          <div className="generated-password">
-            {generatedPassword}
-          </div>
-        )}
+  <>
+    <div className="generated-box">
+
+      <div className="generated-password">
+        {generatedPassword}
+      </div>
+
+      <button
+  className="copy-icon-btn"
+  onClick={copyPassword}
+>
+  <FiCopy />
+  <span>COPY</span>
+</button>
+
+    </div>
+
+    {copied && (
+      <div className="copy-success">
+        ✓ Password copied to clipboard
+      </div>
+    )}
+  </>
+)}
 
       </div>
     </div>
