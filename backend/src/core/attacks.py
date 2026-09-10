@@ -84,6 +84,8 @@
 
 #     return False
 
+from pathlib import Path
+
 def load_common_passwords(filepath: str) -> set:
     """
     Load common passwords from a file into a set.
@@ -95,7 +97,9 @@ def load_common_passwords(filepath: str) -> set:
         return set()
 
 
-COMMON_PASSWORDS = load_common_passwords("data/common_passwords.txt")
+COMMON_PASSWORDS = load_common_passwords(
+    str(Path(__file__).resolve().parents[3] / "data" / "common_passwords.txt")
+)
 
 def is_common_password(password: str) -> bool:
     return password.lower() in COMMON_PASSWORDS
