@@ -39,39 +39,60 @@ function App() {
   }
 
   function generatePassword() {
-    const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    const lowercase = "abcdefghijklmnopqrstuvwxyz"
-    const numbers = "0123456789"
-    const symbols = "!@#$%^&*()_+"
+    const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const lowercase = "abcdefghijklmnopqrstuvwxyz";
+    const numbers = "0123456789";
+    const symbols = "!@#$%^&*()_+";
 
     const allChars =
-      uppercase +
-      lowercase +
-      numbers +
-      symbols
+        uppercase +
+        lowercase +
+        numbers +
+        symbols;
 
-    let newPassword = ""
+    // Generate a cryptographically secure random index
+    const secureRandomIndex = (max) => {
+        const maxUint32 = 0x100000000;
+        const limit = Math.floor(maxUint32 / max) * max;
+        const randomValue = new Uint32Array(1);
 
-    newPassword += uppercase[Math.floor(Math.random() * uppercase.length)]
-    newPassword += lowercase[Math.floor(Math.random() * lowercase.length)]
-    newPassword += numbers[Math.floor(Math.random() * numbers.length)]
-    newPassword += symbols[Math.floor(Math.random() * symbols.length)]
+        do {
+            crypto.getRandomValues(randomValue);
+        } while (randomValue[0] >= limit);
 
+        return randomValue[0] % max;
+    };
+
+    let newPassword = "";
+
+    // Ensure all required character types are included
+    newPassword += uppercase[secureRandomIndex(uppercase.length)];
+    newPassword += lowercase[secureRandomIndex(lowercase.length)];
+    newPassword += numbers[secureRandomIndex(numbers.length)];
+    newPassword += symbols[secureRandomIndex(symbols.length)];
+
+    // Fill the remaining characters
     for (let i = 0; i < 8; i++) {
-      newPassword +=
-        allChars[Math.floor(Math.random() * allChars.length)]
+        newPassword += allChars[secureRandomIndex(allChars.length)];
     }
 
-    newPassword = newPassword
-      .split("")
-      .sort(() => Math.random() - 0.5)
-      .join("")
+    // Secure Fisher-Yates shuffle
+    const passwordArray = newPassword.split("");
 
-    setGeneratedPassword(newPassword)
-    setPassword(newPassword)
+    for (let i = passwordArray.length - 1; i > 0; i--) {
+        const j = secureRandomIndex(i + 1);
+        [passwordArray[i], passwordArray[j]] = [
+            passwordArray[j],
+            passwordArray[i]
+        ];
+    }
 
-    analyzePassword(newPassword)
-  }
+    newPassword = passwordArray.join("");
+
+    setGeneratedPassword(newPassword);
+    setPassword(newPassword);
+    analyzePassword(newPassword);
+}
 
   async function copyPassword() {
     if (!generatedPassword) return
